@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MiniExpressionCompiler {
+public class MiniExpressionCompiler3 {
     public static void main(String[] args) {
         //create scanner to read user input
         java.util.Scanner scanner = new java.util.Scanner(System.in);
@@ -18,6 +18,143 @@ public class MiniExpressionCompiler {
         }
 
         scanner.close();
+    } // charAt(ch)
+
+    private static int For(Stack<Integer> nums, Stack<Character> ops) throws Exception {
+        Stack<Character> opsDupe = new Stack<>();
+        Stack<Character> opsDupeReverse = new Stack<>();
+
+        Stack<Integer> numsDupe = new Stack<>();
+        Stack<Integer> numsDupeReverse = new Stack<>();
+
+        int sum;
+        int totalOps = 0;
+
+        Stack<Integer> precedenceOperators = new Stack<>();
+        Stack<Integer> reversePrecedenceOperators = new Stack<>();
+
+        Stack<Integer> higherPrecedenceNumber = new Stack<>();
+        Stack<Integer> reverseHigherPrecedenceNumber = new Stack<>();
+
+        Stack<Integer> lowerPrecedenceNumber = new Stack<>();
+        Stack<Integer> reverseLowerPrecedenceNumber = new Stack<>();
+
+        Stack<Character> higherPrecedenceOperator = new Stack<>();
+        Stack<Character> reverseHigherPrecedenceOperator = new Stack<>();
+
+        Stack<Character> lowerPrecedenceOperator = new Stack<>();
+        Stack<Character> reverseLowerPrecedenceOperator = new Stack<>();
+
+        // Destroys opsDupe, splitting operators into two stacks based on precedence
+        while (ops.size() > 0) {
+
+            // if top operator is a closing parenthesis run For again from the next opening parenthesis
+            if (ops.peek() == ')'){
+                ops.pop();
+
+                // create new stack to hold operators and numbers within parentheses
+                while (ops.peek() != '(') {
+                    numsDupe.push(nums.pop());
+                    opsDupe.push(ops.pop());
+                }
+                numsDupe.push(nums.pop());
+                // reverse opsDupe to maintain original order
+                while (opsDupe.size() > 0) {
+                    numsDupeReverse.push(numsDupe.pop());
+                    opsDupeReverse.push(opsDupe.pop());
+                }
+                // pop the opening parenthesis
+                ops.pop();
+
+                // push result of For back onto nums
+                nums.push(For(numsDupeReverse, opsDupeReverse));
+            }
+
+            if ("+-*/".indexOf() != -1) {
+                totalOps++;
+                if (op == '+' || op == '-') {
+                    orderOfOperations.push(1);
+                    lowerPrecedenceOperator.push(ops.pop());
+                    precedenceOperators.push(1);
+                    lowerPrecedenceNumber.push(nums.pop());
+                }
+                else if (op == '*' || op == '/') {
+                    orderOfOperations.push(2);
+                    higherPrecedenceOperator.push(ops.pop());
+                    precedenceOperators.push(2);
+                    higherPrecedenceNumber.push(nums.pop());
+                }
+                lowerPrecedenceNumber.push(nums.pop());
+            }
+        }
+
+        // Reverse stacks to maintain original order
+        while (lowerPrecedence.size() > 0) {
+            reverseLowerPrecedenceNumber.push(lowerPrecedenceNumber.pop());
+            reverseLowerPrecedenceOperator.push(lowerPrecedenceOperator.pop());
+        }
+        while (higherPrecedence.size() > 0) {
+            reverseLowerPrecedenceNumber.push(higherPrecedenceNumber.pop());
+            reverseHigherPrecedenceOperator.push(higherPrecedenceOperator.pop());
+        }
+        while (precedenceOperators.size() > 0) {
+            reversePrecedenceOperators.push(precedenceOperators.pop());
+        }
+
+        // Apply higher precedence operations first
+        while (reverseHigherPrecedenceOperator.size() > 0) {
+            Stack<Integer> reversePrecedenceOperatorsDupe = new Stack<>();
+
+            char op = reverseHigherPrecedenceOperator.pop();
+            int y = reverseHigherPrecedenceNumber.pop();
+            int x;
+
+            while (reversePrecedenceOperatorsDupe.peek() != 2)
+                reversePrecedenceOperatorsDupe.pop();
+            reversePrecedenceOperatorsDupe.pop();
+            if (reversePrecedenceOperatorsDupe.peek() != 2)
+                x = reverseLowerPrecedenceNumber.pop();
+            else
+                x = reverseHigherPrecedenceNumber.pop();
+
+            if (op = "*")
+                sum = y * x;
+            else
+                sum = y / x;
+        }
+
+        // Apply lower precedence operations
+        while (reverseHigherPrecedenceOperator.size() > 0) {
+            Stack<Integer> reversePrecedenceOperatorsDupe = new Stack<>();
+
+            char op = reverseHigherPrecedenceOperator.pop();
+            int y = reverseHigherPrecedenceNumber.pop();
+            int x;
+
+            while (reversePrecedenceOperatorsDupe.peek() != 2)
+                reversePrecedenceOperatorsDupe.pop();
+            reversePrecedenceOperatorsDupe.pop();
+            if (reversePrecedenceOperatorsDupe.peek() != 2)
+                x = reverseLowerPrecedenceNumber.pop();
+            else
+                x = reverseHigherPrecedenceNumber.pop();
+
+            if (op = "*")
+                sum = y * x;
+            else
+                sum y / x;
+        }
+
+
+
+
+
+        
+        while (operatorValues.size() > 0) {
+            reverseStack.push(operatorValues.pop);
+
+            operatorValues.push(ForLoop(nums, ops, totalOps));
+        }
     }
 
     // Evaluate mathematical expression
@@ -80,7 +217,7 @@ public class MiniExpressionCompiler {
                 }
                 // increment closing parenthesis count and pop from operator stack
                 ClosingParenthesisCount++;
-                operators.pop();
+                operators.push();
             }
 
             // if the character is any other operator
@@ -166,9 +303,8 @@ public class MiniExpressionCompiler {
 
     // returns a precedence value for each operator
     private static int precedence(char op) {
-        if (op == '+' || op == '.') return 1;
+        if (op == '+' || op == '-') return 1;
         if (op == '*' || op == '/') return 2;
-        if (op == '-') return 3;
         return 0;
     }
 
@@ -185,3 +321,4 @@ public class MiniExpressionCompiler {
         }
     }
 }
+
