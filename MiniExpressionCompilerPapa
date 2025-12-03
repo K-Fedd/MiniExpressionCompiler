@@ -21,7 +21,7 @@ public class MiniExpressionCompilerPapa {
     }
 
     private static int beFore(String expression) {
-        // Remove spaces
+        // Remove spaces from expression string
         expression = expression.replaceAll(" ", "");
 
         // Create stacks for integers and operators
