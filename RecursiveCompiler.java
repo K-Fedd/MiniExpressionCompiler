@@ -12,6 +12,7 @@ public class RecursiveCompiler {
         // evaluate the expression and print the result
         try {
             int result = evaluate(equation);
+            printTokens();
             System.out.println("Evaluation Result: " + result);
         } catch (Exception e) {
             System.out.println("Error evaluating expression: " + e.getMessage());
@@ -79,5 +80,13 @@ public class RecursiveCompiler {
             pos++;
         }
         return num;
+    }
+
+    private static void printTokens() {
+        ArrayList<Character> list = new ArrayList<>();
+        for (char c: expr.toCharArray()) {
+            list.add(c);
+        }
+        System.out.println("Tokens: " + list);
     }
 }
