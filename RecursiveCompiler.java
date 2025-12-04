@@ -21,8 +21,8 @@ public class RecursiveCompiler {
             // use root node to print depth tree
             printByDepth(root);
 
-            // set int result to equal the root node, which is the sum of the equation
-            int result = evaluateNode(root);
+            // set double result to equal the root node, which is the sum of the equation
+            double result = evaluateNode(root);
             System.out.println("\nEvaluation Result: " + result);
 
         } catch (Exception e) {
@@ -235,13 +235,13 @@ public class RecursiveCompiler {
 
     // operator node checks below nodes and applies operator to numbers, 
     // replacing the value of the operator node with the number
-    private static int evaluateNode(Node n) {
+    private static double evaluateNode(Node n) {
         // if there are no more nodes below node n, return the value in n
         if (n.left == null && n.right == null)
-            return Integer.parseInt(n.value);
+            return Double.parseDouble(n.value);
 
-        int L = evaluateNode(n.left);
-        int R = evaluateNode(n.right);
+        double L = evaluateNode(n.left);
+        double R = evaluateNode(n.right);
 
         // switch applies the node to the left and right ints
         return switch (n.value) {
@@ -292,5 +292,4 @@ public class RecursiveCompiler {
         collectDepth(node.left, depth + 1, levels, node);
         collectDepth(node.right, depth + 1, levels, node);
     }
-
 }
